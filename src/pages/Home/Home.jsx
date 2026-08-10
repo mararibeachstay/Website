@@ -7,6 +7,7 @@ import {
   Sunrise, Bike, Soup, Fish, Sunset, Sparkles, Anchor, Landmark,
   Plus, Minus, Phone, MessageCircle, Mail, MapPin,
   Quote, Star, Phone as PhoneIcon,
+  Expand, X,
 } from 'lucide-react'
 import Button from '../../components/Button/Button'
 import SectionTitle from '../../components/SectionTitle/SectionTitle'
@@ -228,6 +229,9 @@ function Home() {
   const [guestsOpen, setGuestsOpen] = useState(false)
   const guestsRef = useRef(null)
 
+  /* ---- Gallery lightbox state ---- */
+  const [lightboxIndex, setLightboxIndex] = useState(null)
+
   const todayISO = toISODate(new Date())
   const minCheckOut = addDays(booking.checkIn, 1)
 
@@ -242,6 +246,26 @@ function Home() {
     document.addEventListener('mousedown', handleClick)
     return () => document.removeEventListener('mousedown', handleClick)
   }, [])
+
+  // Lightbox: keyboard navigation + lock page scroll while open
+  useEffect(() => {
+    if (lightboxIndex === null) return
+
+    const handleKey = (e) => {
+      if (e.key === 'Escape') setLightboxIndex(null)
+      if (e.key === 'ArrowRight') setLightboxIndex((i) => (i + 1) % GALLERY_IMAGES.length)
+      if (e.key === 'ArrowLeft') setLightboxIndex((i) => (i - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length)
+    }
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    window.addEventListener('keydown', handleKey)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      window.removeEventListener('keydown', handleKey)
+    }
+  }, [lightboxIndex])
 
   const scrollToSection = (id) => {
     const el = document.getElementById(id)
@@ -274,7 +298,7 @@ function Home() {
 
   const handleCheckAvailability = () => {
     const message = [
-      'Hi Marari Beach Homestay! 🌴',
+      'Hi Marari Traditional Beach Homestay! 🌴',
       "I'd like to check availability for:",
       '',
       `📅 Check-in: ${formatDisplayDate(booking.checkIn)}`,
@@ -295,190 +319,202 @@ function Home() {
   const nextReview = () => setActiveReview((i) => (i + 1) % TESTIMONIALS.length)
   const prevReview = () => setActiveReview((i) => (i - 1 + TESTIMONIALS.length) % TESTIMONIALS.length)
 
+  /* ---- Lightbox handlers ---- */
+  const openLightbox = (i) => setLightboxIndex(i)
+  const closeLightbox = () => setLightboxIndex(null)
+  const nextLightboxImage = () => setLightboxIndex((i) => (i + 1) % GALLERY_IMAGES.length)
+  const prevLightboxImage = () => setLightboxIndex((i) => (i - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length)
+
   return (
     <main className="home">
       {/* ================================================================ */}
-      {/* HERO                                                              */}
+      {/* HERO + FLOATING BOOKING CARD                                      */}
+      {/* Wrapped together so the booking card's absolute positioning is   */}
+      {/* anchored to the hero's own box, not some ancestor further up the */}
+      {/* tree — this is what keeps it correctly straddling the hero/about */}
+      {/* boundary at every breakpoint.                                    */}
       {/* ================================================================ */}
-      <section className="hero" id="home">
-        <div
-          className="hero__bg"
-          style={{ backgroundImage: "url('/assets/images/common/hero.png')" }}
-        />        <div className="hero__overlay" />
+      <div className="hero-wrap">
+        <section className="hero" id="home">
+          <div
+            className="hero__bg"
+            style={{ backgroundImage: "url('/assets/images/common/hero.png')" }}
+          />        <div className="hero__overlay" />
 
-        <div className="container hero__content">
-          <motion.p
-            className="hero__eyebrow"
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            🌴 Welcome to Mararikulam
-          </motion.p>
+          <div className="container hero__content">
+            <motion.p
+              className="hero__eyebrow"
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              🌴 Welcome to Mararikulam
+            </motion.p>
 
-          <motion.h1
-            className="hero__heading"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, delay: 0.35 }}
-          >
-            Experience Kerala's Quietest<br />
-            <span className="italic-accent">Beach Escape</span>
-          </motion.h1>
+            <motion.h1
+              className="hero__heading"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, delay: 0.35 }}
+            >
+              Experience Kerala's Quietest<br />
+              <span className="italic-accent">Beach Escape</span>
+            </motion.h1>
 
-          <motion.p
-            className="hero__desc"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-          >
-            Wake up to the sound of waves, walk barefoot on untouched beaches, and
-            experience authentic Kerala hospitality in the heart of Mararikulam.
-          </motion.p>
+            <motion.p
+              className="hero__desc"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+            >
+              Wake up to the sound of waves, walk barefoot on untouched beaches, and
+              experience authentic Kerala hospitality in the heart of Mararikulam.
+            </motion.p>
 
-          <motion.div
-            className="hero__actions"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.65 }}
-          >
-            <Button variant="primary" icon={CalendarDays} onClick={() => scrollToSection('booking')}>
-              Book Your Stay
-            </Button>
-            <Button variant="outline" icon={ChevronRight} onClick={() => scrollToSection('about')}>
-              Explore More
-            </Button>
-          </motion.div>
-        </div>
-      </section>
+            <motion.div
+              className="hero__actions"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.65 }}
+            >
+              <Button variant="primary" icon={CalendarDays} onClick={() => scrollToSection('booking')}>
+                Book Your Stay
+              </Button>
+              <Button variant="outline" icon={ChevronRight} onClick={() => scrollToSection('about')}>
+                Explore More
+              </Button>
+            </motion.div>
+          </div>
+        </section>
 
-      {/* Floating booking card */}
-      <motion.div
-        className="booking-card"
-        id="booking"
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.9, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <div className="booking-card__field">
-          <label className="booking-card__label" htmlFor="checkIn">
-            <CalendarDays size={15} /> Check In
-          </label>
-          <input
-            id="checkIn"
-            type="date"
-            className="booking-card__value booking-card__input"
-            value={booking.checkIn}
-            min={todayISO}
-            onChange={handleCheckInChange}
-          />
-        </div>
+        {/* Floating booking card */}
+        <motion.div
+          className="booking-card"
+          id="booking"
+          initial={{ opacity: 0, y: 60 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.8, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="booking-card__field">
+            <label className="booking-card__label" htmlFor="checkIn">
+              <CalendarDays size={15} /> Check In
+            </label>
+            <input
+              id="checkIn"
+              type="date"
+              className="booking-card__value booking-card__input"
+              value={booking.checkIn}
+              min={todayISO}
+              onChange={handleCheckInChange}
+            />
+          </div>
 
-        <div className="booking-card__divider" />
+          <div className="booking-card__divider" />
 
-        <div className="booking-card__field">
-          <label className="booking-card__label" htmlFor="checkOut">
-            <CalendarDays size={15} /> Check Out
-          </label>
-          <input
-            id="checkOut"
-            type="date"
-            className="booking-card__value booking-card__input"
-            value={booking.checkOut}
-            min={minCheckOut}
-            onChange={handleCheckOutChange}
-          />
-        </div>
+          <div className="booking-card__field">
+            <label className="booking-card__label" htmlFor="checkOut">
+              <CalendarDays size={15} /> Check Out
+            </label>
+            <input
+              id="checkOut"
+              type="date"
+              className="booking-card__value booking-card__input"
+              value={booking.checkOut}
+              min={minCheckOut}
+              onChange={handleCheckOutChange}
+            />
+          </div>
 
-        <div className="booking-card__divider" />
+          <div className="booking-card__divider" />
 
-        <div className="booking-card__field booking-card__field--guests" ref={guestsRef}>
-          <span className="booking-card__label">
-            <Users size={15} /> Guests
-          </span>
-          <button
-            type="button"
-            className="booking-card__value booking-card__guests-toggle"
-            onClick={() => setGuestsOpen((o) => !o)}
-            aria-expanded={guestsOpen}
-          >
-            <span>{guestsSummary}</span>
-            <ChevronDown size={14} className={`booking-card__chevron ${guestsOpen ? 'is-open' : ''}`} />
-          </button>
+          <div className="booking-card__field booking-card__field--guests" ref={guestsRef}>
+            <span className="booking-card__label">
+              <Users size={15} /> Guests
+            </span>
+            <button
+              type="button"
+              className="booking-card__value booking-card__guests-toggle"
+              onClick={() => setGuestsOpen((o) => !o)}
+              aria-expanded={guestsOpen}
+            >
+              <span>{guestsSummary}</span>
+              <ChevronDown size={14} className={`booking-card__chevron ${guestsOpen ? 'is-open' : ''}`} />
+            </button>
 
-          <AnimatePresence>
-            {guestsOpen && (
-              <motion.div
-                className="guests-dropdown"
-                initial={{ opacity: 0, y: -8 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -8 }}
-                transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              >
-                <div className="guests-dropdown__row">
-                  <div>
-                    <p>Adults</p>
-                    <span>Ages 13+</span>
+            <AnimatePresence>
+              {guestsOpen && (
+                <motion.div
+                  className="guests-dropdown"
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <div className="guests-dropdown__row">
+                    <div>
+                      <p>Adults</p>
+                      <span>Ages 13+</span>
+                    </div>
+                    <div className="guests-dropdown__counter">
+                      <button
+                        type="button"
+                        onClick={() => updateGuests('adults', -1)}
+                        disabled={booking.adults <= 1}
+                        aria-label="Decrease adults"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span>{booking.adults}</span>
+                      <button
+                        type="button"
+                        onClick={() => updateGuests('adults', 1)}
+                        disabled={booking.adults >= 10}
+                        aria-label="Increase adults"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
                   </div>
-                  <div className="guests-dropdown__counter">
-                    <button
-                      type="button"
-                      onClick={() => updateGuests('adults', -1)}
-                      disabled={booking.adults <= 1}
-                      aria-label="Decrease adults"
-                    >
-                      <Minus size={14} />
-                    </button>
-                    <span>{booking.adults}</span>
-                    <button
-                      type="button"
-                      onClick={() => updateGuests('adults', 1)}
-                      disabled={booking.adults >= 10}
-                      aria-label="Increase adults"
-                    >
-                      <Plus size={14} />
-                    </button>
-                  </div>
-                </div>
 
-                <div className="guests-dropdown__row">
-                  <div>
-                    <p>Children</p>
-                    <span>Ages 0–12</span>
+                  <div className="guests-dropdown__row">
+                    <div>
+                      <p>Children</p>
+                      <span>Ages 0–12</span>
+                    </div>
+                    <div className="guests-dropdown__counter">
+                      <button
+                        type="button"
+                        onClick={() => updateGuests('children', -1)}
+                        disabled={booking.children <= 0}
+                        aria-label="Decrease children"
+                      >
+                        <Minus size={14} />
+                      </button>
+                      <span>{booking.children}</span>
+                      <button
+                        type="button"
+                        onClick={() => updateGuests('children', 1)}
+                        disabled={booking.children >= 6}
+                        aria-label="Increase children"
+                      >
+                        <Plus size={14} />
+                      </button>
+                    </div>
                   </div>
-                  <div className="guests-dropdown__counter">
-                    <button
-                      type="button"
-                      onClick={() => updateGuests('children', -1)}
-                      disabled={booking.children <= 0}
-                      aria-label="Decrease children"
-                    >
-                      <Minus size={14} />
-                    </button>
-                    <span>{booking.children}</span>
-                    <button
-                      type="button"
-                      onClick={() => updateGuests('children', 1)}
-                      disabled={booking.children >= 6}
-                      aria-label="Increase children"
-                    >
-                      <Plus size={14} />
-                    </button>
-                  </div>
-                </div>
 
-                <button type="button" className="guests-dropdown__done" onClick={() => setGuestsOpen(false)}>
-                  Done
-                </button>
-              </motion.div>
-            )}
-          </AnimatePresence>
-        </div>
+                  <button type="button" className="guests-dropdown__done" onClick={() => setGuestsOpen(false)}>
+                    Done
+                  </button>
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
 
-        <Button variant="primary" className="booking-card__btn" onClick={handleCheckAvailability}>
-          Check Availability
-        </Button>
-      </motion.div>
+          <Button variant="primary" className="booking-card__btn" onClick={handleCheckAvailability}>
+            Check Availability
+          </Button>
+        </motion.div>
+      </div>
 
       {/* ================================================================ */}
       {/* ABOUT                                                             */}
@@ -693,9 +729,19 @@ function Home() {
             viewport={{ once: true, amount: 0.15 }}
           >
             {GALLERY_IMAGES.map((src, i) => (
-              <motion.div className="gallery__item" key={i} variants={fadeUp}>
+              <motion.button
+                type="button"
+                className="gallery__item"
+                key={i}
+                variants={fadeUp}
+                onClick={() => openLightbox(i)}
+                aria-label={`Open image ${i + 1} of ${GALLERY_IMAGES.length}`}
+              >
                 <img src={src} alt={`Marari homestay moment ${i + 1}`} loading="lazy" />
-              </motion.div>
+                <span className="gallery__item-zoom">
+                  <Expand size={18} />
+                </span>
+              </motion.button>
             ))}
           </motion.div>
         </div>
@@ -830,6 +876,70 @@ function Home() {
           </div>
         </div>
       </section>
+
+      {/* ================================================================ */}
+      {/* GALLERY LIGHTBOX                                                  */}
+      {/* ================================================================ */}
+      <AnimatePresence>
+        {lightboxIndex !== null && (
+          <motion.div
+            className="lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Gallery image viewer"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={closeLightbox}
+          >
+            <button
+              type="button"
+              className="lightbox__close"
+              onClick={closeLightbox}
+              aria-label="Close image viewer"
+            >
+              <X size={20} />
+            </button>
+
+            <button
+              type="button"
+              className="lightbox__nav lightbox__nav--prev"
+              onClick={(e) => { e.stopPropagation(); prevLightboxImage(); }}
+              aria-label="Previous image"
+            >
+              <ChevronLeft size={24} />
+            </button>
+
+            <div className="lightbox__stage" onClick={(e) => e.stopPropagation()}>
+              <AnimatePresence mode="wait">
+                <motion.img
+                  key={lightboxIndex}
+                  src={GALLERY_IMAGES[lightboxIndex]}
+                  alt={`Marari homestay moment ${lightboxIndex + 1}`}
+                  className="lightbox__image"
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.96 }}
+                  transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                />
+              </AnimatePresence>
+              <div className="lightbox__counter">
+                {lightboxIndex + 1} / {GALLERY_IMAGES.length}
+              </div>
+            </div>
+
+            <button
+              type="button"
+              className="lightbox__nav lightbox__nav--next"
+              onClick={(e) => { e.stopPropagation(); nextLightboxImage(); }}
+              aria-label="Next image"
+            >
+              <ChevronRight size={24} />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   )
 }

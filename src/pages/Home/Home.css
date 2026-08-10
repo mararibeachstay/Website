@@ -1,6 +1,15 @@
 /* ==========================================================================
    HERO
    ========================================================================== */
+
+/* Wraps .hero + the floating .booking-card together. This is the anchor for
+   the booking card's absolute positioning — without it, the card has no
+   correctly-positioned ancestor to measure "bottom" against, which is what
+   was causing the alignment drift between hero and about. */
+.hero-wrap {
+  position: relative;
+}
+
 .hero {
   position: relative;
   min-height: 100vh;
@@ -71,6 +80,8 @@
    Uses bottom:0 + translateY(50%) instead of a fixed negative offset, so the
    card always straddles the hero/about boundary evenly no matter how tall
    its content gets (date pickers, guest dropdown, wrapped text, etc.).
+   Positioned relative to .hero-wrap (see above), which is what keeps it
+   anchored correctly to the hero's own bottom edge at every breakpoint.
    -------------------------------------------------------------------------- */
 .booking-card {
   position: absolute;
@@ -776,9 +787,15 @@
 }
 
 .gallery__item {
+  position: relative;
   border-radius: var(--radius-sm);
   overflow: hidden;
   aspect-ratio: 3 / 4;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  background: none;
+  display: block;
 }
 
 .gallery__item:first-child {
@@ -794,6 +811,121 @@
 
 .gallery__item:hover img {
   transform: scale(1.1);
+}
+
+/* Zoom-cue overlay shown on hover/focus, signalling the image opens the lightbox */
+.gallery__item-zoom {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-cream);
+  background: rgba(10, 16, 12, 0);
+  opacity: 0;
+  transition: opacity 0.35s ease, background 0.35s ease;
+}
+
+.gallery__item:hover .gallery__item-zoom,
+.gallery__item:focus-visible .gallery__item-zoom {
+  opacity: 1;
+  background: rgba(10, 16, 12, 0.32);
+}
+
+.gallery__item:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* ==========================================================================
+   GALLERY LIGHTBOX
+   ========================================================================== */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 40px;
+  background: rgba(8, 14, 11, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.lightbox__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1000px;
+  width: 100%;
+}
+
+.lightbox__image {
+  display: block;
+  max-width: 100%;
+  max-height: 78vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-strong);
+}
+
+.lightbox__counter {
+  margin-top: 18px;
+  color: rgba(251, 247, 239, 0.7);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 28px;
+  right: 28px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 247, 239, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 3;
+}
+
+.lightbox__close:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-dark-green);
+}
+
+.lightbox__nav {
+  width: 52px;
+  height: 52px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 247, 239, 0.3);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  z-index: 3;
+}
+
+.lightbox__nav:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-dark-green);
 }
 
 /* ==========================================================================
@@ -907,13 +1039,13 @@
   }
 
   .about {
-    padding-top: calc(var(--section-padding) + 190px);
+    /* padding-top: calc(var(--section-padding) + 190px); */
   }
 }
 
 @media (max-width: 768px) {
   .hero {
-    padding-bottom: 60px;
+    /* padding-bottom: 60px; */
     text-align: left;
   }
 
@@ -926,6 +1058,7 @@
     padding: 25px;
     gap: 16px;
     max-width: calc(100% - 40px);
+    margin-bottom: -175px;
   }
 
   .booking-card__field {
@@ -943,7 +1076,7 @@
   }
 
   .about {
-    padding-top: calc(var(--section-padding) + 300px);
+    padding-top: calc(var(--section-padding) + 200px);
   }
 
   .rooms__header,
@@ -963,6 +1096,39 @@
 
   .gallery__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Lightbox: put arrows at the sides of the screen instead of flanking the
+     stage, since there isn't room for three columns anymore. */
+  .lightbox {
+    padding: 20px;
+  }
+
+  .lightbox__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 42px;
+    height: 42px;
+  }
+
+  .lightbox__nav--prev {
+    left: 12px;
+  }
+
+  .lightbox__nav--next {
+    right: 12px;
+  }
+
+  .lightbox__close {
+    top: 16px;
+    right: 16px;
+    width: 38px;
+    height: 38px;
+  }
+
+  .lightbox__image {
+    max-height: 62vh;
   }
 }
 
@@ -990,6 +1156,15 @@
   }
 
   .about {
-    padding-top: calc(var(--section-padding) + 340px);
+    padding-top: calc(var(--section-padding) + 240px);
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .lightbox__counter {
+    font-size: 0.72rem;
   }
 }
