@@ -136,7 +136,7 @@ function Header() {
 
         <div className="header__actions">
 
-          <button
+          {/* <button
             className="header__cta"
             onClick={() => scrollToSection('booking')}
           >
@@ -146,7 +146,7 @@ function Header() {
             />
 
             <span>Book Your Stay</span>
-          </button>
+          </button> */}
 
           <button
             className="header__menu-btn"

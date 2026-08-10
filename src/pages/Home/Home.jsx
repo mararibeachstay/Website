@@ -16,11 +16,6 @@ import './Home.css'
 /* STATIC CONTENT                                                             */
 /* -------------------------------------------------------------------------- */
 
-const HERO_IMAGE =
-  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1920&q=80'
-
-const ABOUT_IMAGE =
-  'https://images.unsplash.com/photo-1602343168117-8c8b52a1b409?auto=format&fit=crop&w=1000&q=80'
 
 const ABOUT_FEATURES = [
   { icon: Heart, title: 'Family Owned', desc: 'Personal care and attention' },
@@ -35,21 +30,21 @@ const ROOMS = [
     guests: '2 Guests',
     beds: '1 Bed',
     view: 'Sea View',
-    image: 'https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&w=900&q=80',
+    image: '/assets/images/gallery/room_two.jpeg',
   },
   {
-    name: 'Standard Garden View Room',
+    name: 'Standard Balcony View Room',
     guests: '2 Guests',
     beds: '1 Bed',
-    view: 'Garden View',
-    image: 'https://images.unsplash.com/photo-1618773928121-c32242e63f39?auto=format&fit=crop&w=900&q=80',
+    view: 'Balcony View',
+    image: '/assets/images/gallery/balcony_room_three.jpeg',
   },
   {
-    name: 'Family Room',
-    guests: '4 Guests',
-    beds: '2 Beds',
-    view: 'Garden View',
-    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=900&q=80',
+    name: 'Deluxe Room',
+    guests: '2 Guests',
+    beds: '1 Bed',
+    view: 'Sea View',
+    image: '/assets/images/gallery/second_room_view.jpeg',
   },
 ]
 
@@ -75,35 +70,102 @@ const FAQS = [
 
 const TESTIMONIALS = [
   {
-    quote: 'The location is just perfect! Waking up to the sound of waves and the warm hospitality made our stay unforgettable. Highly recommended!',
+    quote:
+      'The location is just perfect! Waking up to the sound of waves and the warm hospitality made our stay unforgettable. Highly recommended!',
     name: 'Priya Nair',
-    place: 'Bangalore, India',
+    place: 'Kochi, Kerala',
   },
   {
-    quote: 'A truly authentic homestay experience. The food felt like home and the hosts went out of their way to make us comfortable.',
-    name: 'Daniel Fischer',
-    place: 'Munich, Germany',
-  },
-  {
-    quote: 'Quiet, clean, and beautifully close to the beach. Exactly the escape we were looking for in Kerala.',
+    quote:
+      'A truly authentic homestay experience. The food felt like home and the hosts went out of their way to make us comfortable.',
     name: 'Anjali Menon',
-    place: 'Kochi, India',
+    place: 'Thiruvananthapuram, Kerala',
+  },
+  {
+    quote:
+      'Quiet, clean, and beautifully close to the beach. Exactly the peaceful escape we were looking for.',
+    name: 'Arun Kumar',
+    place: 'Kottayam, Kerala',
+  },
+  {
+    quote:
+      'The rooms were spotless, the beach was just a short walk away, and the homemade breakfast was absolutely delicious. We will definitely return.',
+    name: 'Sreelekshmi R',
+    place: 'Thrissur, Kerala',
+  },
+  {
+    quote:
+      'The hosts treated us like family. Their hospitality, local guidance, and delicious Kerala meals made our holiday truly memorable.',
+    name: 'Rahul Mohan',
+    place: 'Alappuzha, Kerala',
+  },
+  {
+    quote:
+      'A wonderful place to relax away from the busy city. The peaceful surroundings and clean rooms exceeded our expectations.',
+    name: 'Nithya S',
+    place: 'Kozhikode, Kerala',
+  },
+  {
+    quote:
+      'Beautiful property with a calm atmosphere. The beach is clean, less crowded, and perfect for morning walks.',
+    name: 'Vishnu Prasad',
+    place: 'Palakkad, Kerala',
+  },
+  {
+    quote:
+      'One of the best homestays we have visited in Kerala. Excellent service, comfortable rooms, and genuine care from the hosts.',
+    name: 'Meera Krishnan',
+    place: 'Kannur, Kerala',
+  },
+  {
+    quote:
+      'Everything was well maintained and the ambience was very relaxing. The evenings by the beach were simply magical.',
+    name: 'Akhil Raj',
+    place: 'Pathanamthitta, Kerala',
+  },
+  {
+    quote:
+      'Perfect for families looking for a peaceful getaway. The hospitality and traditional Kerala cuisine were outstanding.',
+    name: 'Divya Suresh',
+    place: 'Ernakulam, Kerala',
   },
 ]
 
 const GALLERY_IMAGES = [
-  'https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1615874959474-d609969a20ed?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1520454974749-611b7248ffdb?auto=format&fit=crop&w=700&q=80',
-  'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=700&q=80',
+  '/assets/images/common/contact.png',
+  '/assets/images/gallery/front_view.jpeg',
+  '/assets/images/gallery/front_side_view.jpeg',
+  '/assets/images/gallery/front_inside_sitting_place.jpeg',
+  '/assets/images/gallery/front_sitting_space.jpeg',
+  '/assets/images/gallery/front_view.jpeg',
+
+  '/assets/images/gallery/main_door.jpeg',
+  '/assets/images/gallery/outside_view.jpeg',
+
+  '/assets/images/gallery/room_one.jpeg',
+  '/assets/images/gallery/room_two.jpeg',
+  '/assets/images/gallery/room_three.jpeg',
+  '/assets/images/gallery/room_four.jpeg',
+  '/assets/images/gallery/room_five.jpeg',
+  '/assets/images/gallery/room_six.jpeg',
+
+  '/assets/images/gallery/second_room_view.jpeg',
+  '/assets/images/gallery/second_room_one.jpeg',
+  '/assets/images/gallery/second_room_three.jpeg',
+  '/assets/images/gallery/second_room_four.jpeg',
+
+  '/assets/images/gallery/balcony_view.jpeg',
+  '/assets/images/gallery/balcony_view_two.jpeg',
+  '/assets/images/gallery/balcony_room.jpeg',
+  '/assets/images/gallery/balcony_room_one.jpeg',
+  '/assets/images/gallery/balcony_room_two.jpeg',
+  '/assets/images/gallery/balcony_room_three.jpeg',
+  '/assets/images/gallery/balcony_room_five.jpeg',
 ]
 
-const CTA_IMAGE =
-  'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?auto=format&fit=crop&w=1920&q=80'
 
 /* WhatsApp business number (digits only, country code first, no + or spaces) */
-const WHATSAPP_NUMBER = '919496861903'
+const WHATSAPP_NUMBER = '918921170356'
 
 /* -------------------------------------------------------------------------- */
 /* MOTION VARIANTS                                                            */
@@ -239,8 +301,10 @@ function Home() {
       {/* HERO                                                              */}
       {/* ================================================================ */}
       <section className="hero" id="home">
-        <div className="hero__bg" style={{ backgroundImage: `url(${HERO_IMAGE})` }} />
-        <div className="hero__overlay" />
+        <div
+          className="hero__bg"
+          style={{ backgroundImage: "url('/assets/images/common/hero.png')" }}
+        />        <div className="hero__overlay" />
 
         <div className="container hero__content">
           <motion.p
@@ -466,7 +530,7 @@ function Home() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           >
-            <img src={ABOUT_IMAGE} alt="Beachfront veranda seating at Marari homestay" />
+            <img src="/assets/images/common/contact.png" alt="Beachfront veranda seating at Marari homestay" />
           </motion.div>
         </div>
       </section>
@@ -551,7 +615,7 @@ function Home() {
       <section className="testimonials" id="reviews">
         <div
           className="testimonials__bg"
-          style={{ backgroundImage: `url(${GALLERY_IMAGES[3]})` }}
+          style={{ backgroundImage: `url(/assets/images/common/cta.png)` }}
         />
         <div className="testimonials__overlay" />
 
@@ -641,7 +705,7 @@ function Home() {
       {/* CTA                                                               */}
       {/* ================================================================ */}
       <section className="cta" id="cta">
-        <div className="cta__bg" style={{ backgroundImage: `url(${CTA_IMAGE})` }} />
+        <div className="cta__bg" style={{ backgroundImage: `url(/assets/images/common/cta.png)` }} />
         <div className="cta__overlay" />
         <motion.div
           className="container cta__inner"
@@ -716,7 +780,7 @@ function Home() {
             >
               <div
                 className="contact-card__image"
-                style={{ backgroundImage: `url(${GALLERY_IMAGES[2]})` }}
+                style={{ backgroundImage: `url(/assets/images/common/contact.png)` }}
               />
               <div className="contact-card__body">
                 <h3>Plan Your Stay</h3>
