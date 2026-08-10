@@ -1,0 +1,48 @@
+.section-title {
+  max-width: 620px;
+  margin-bottom: 48px;
+}
+
+.section-title--center {
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.section-title__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-teak);
+  margin-bottom: 14px;
+}
+
+.section-title--light .section-title__eyebrow {
+  color: var(--color-gold-soft);
+}
+
+.section-title__icon {
+  display: inline-flex;
+  color: var(--color-gold);
+}
+
+.section-title__heading {
+  font-size: clamp(1.9rem, 3.4vw, 2.7rem);
+  color: var(--color-dark-green);
+}
+
+.section-title--light .section-title__heading {
+  color: var(--color-cream);
+}
+
+@media (max-width: 600px) {
+  .section-title {
+    margin-bottom: 32px;
+  }
+}

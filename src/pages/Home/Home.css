@@ -1,0 +1,995 @@
+/* ==========================================================================
+   HERO
+   ========================================================================== */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding-top: 50px;
+}
+
+.hero__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  transform: scale(1.05);
+}
+
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(10, 16, 12, 0.55) 0%, rgba(10, 16, 12, 0.3) 40%, rgba(8, 14, 11, 0.75) 100%);
+}
+
+.hero__content {
+  position: relative;
+  z-index: 2;
+  max-width: 640px;
+  padding-top: 60px;
+}
+
+.hero__eyebrow {
+  color: var(--color-gold-soft);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.hero__heading {
+  font-family: var(--font-display);
+  color: var(--color-white);
+  font-size: clamp(2.6rem, 5.2vw, 4.2rem);
+  line-height: 1.1;
+  margin-bottom: 22px;
+}
+
+.hero__desc {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.02rem;
+  max-width: 460px;
+  margin-bottom: 36px;
+  line-height: 1.7;
+}
+
+.hero__actions {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.hero__actions .btn--outline {
+  color: var(--color-white);
+}
+
+/* --------------------------------------------------------------------------
+   Floating booking card
+   Uses bottom:0 + translateY(50%) instead of a fixed negative offset, so the
+   card always straddles the hero/about boundary evenly no matter how tall
+   its content gets (date pickers, guest dropdown, wrapped text, etc.).
+   -------------------------------------------------------------------------- */
+.booking-card {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -45px;
+  transform: translateY(50%);
+  z-index: 5;
+  max-width: 1080px;
+  margin: 0 auto;
+  background: var(--color-white);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-strong);
+  display: flex;
+  align-items: center;
+  padding: 24px 32px;
+  gap: 18px;
+}
+
+.booking-card__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.booking-card__label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.booking-card__value {
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  color: var(--color-dark-green);
+}
+
+/* Native date inputs, restyled to match the card's typography */
+.booking-card__input {
+  border: none;
+  background: transparent;
+  padding: 0;
+  outline: none;
+  cursor: pointer;
+  width: 100%;
+  color-scheme: light;
+}
+
+.booking-card__input:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+.booking-card__input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  opacity: 0.65;
+  filter: invert(24%) sepia(20%) saturate(700%) hue-rotate(70deg);
+}
+
+/* Guests field acts as a dropdown trigger */
+.booking-card__guests-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  color: var(--color-dark-green);
+  cursor: pointer;
+  text-align: left;
+}
+
+.booking-card__chevron {
+  flex-shrink: 0;
+  color: var(--color-gold);
+  transition: transform 0.25s ease;
+}
+
+.booking-card__chevron.is-open {
+  transform: rotate(180deg);
+}
+
+.guests-dropdown {
+  position: absolute;
+  top: calc(100% + 16px);
+  left: 0;
+  min-width: 250px;
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-strong);
+  padding: 18px 20px;
+  z-index: 20;
+}
+
+.guests-dropdown__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 0;
+}
+
+.guests-dropdown__row+.guests-dropdown__row {
+  border-top: 1px solid var(--color-border);
+}
+
+.guests-dropdown__row p {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-dark-green);
+  margin-bottom: 2px;
+}
+
+.guests-dropdown__row span {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+}
+
+.guests-dropdown__counter {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.guests-dropdown__counter button {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-dark-green);
+  background: var(--color-white);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.guests-dropdown__counter button:hover:not(:disabled) {
+  background: var(--color-dark-green);
+  color: var(--color-gold-soft);
+  border-color: var(--color-dark-green);
+}
+
+.guests-dropdown__counter button:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+.guests-dropdown__counter span {
+  min-width: 18px;
+  text-align: center;
+  font-weight: 600;
+  color: var(--color-dark-green);
+}
+
+.guests-dropdown__done {
+  margin-top: 14px;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-dark-green);
+  color: var(--color-gold-soft);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.guests-dropdown__done:hover {
+  background: var(--color-teak);
+}
+
+.booking-card__divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--color-border);
+  flex-shrink: 0;
+}
+
+.booking-card__btn {
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   ABOUT
+   ========================================================================== */
+.about {
+  /* Extra top padding clears the floating booking card, which overlaps this
+     boundary by roughly half its own height (see .booking-card above). */
+  padding: calc(var(--section-padding) + 130px) 0 var(--section-padding);
+}
+
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 70px;
+  align-items: center;
+}
+
+.about__desc {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  max-width: 460px;
+  margin-bottom: 36px;
+  line-height: 1.75;
+}
+
+.about__features {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 22px;
+  margin-bottom: 40px;
+}
+
+.about__feature-icon {
+  display: inline-flex;
+  color: var(--color-gold);
+  margin-bottom: 12px;
+}
+
+.about__feature h4 {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-dark-green);
+  margin-bottom: 4px;
+}
+
+.about__feature p {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  line-height: 1.4;
+}
+
+.about__image {
+  position: relative;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+  aspect-ratio: 4 / 3.4;
+}
+
+.about__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   ROOMS
+   ========================================================================== */
+.rooms {
+  padding: var(--section-padding) 0;
+  background: var(--color-sand);
+}
+
+.rooms__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.rooms__view-all {
+  margin-bottom: 48px;
+}
+
+.rooms__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+}
+
+.room-card {
+  background: var(--color-white);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-soft);
+  transition: box-shadow 0.4s ease, transform 0.4s ease;
+}
+
+.room-card:hover {
+  box-shadow: var(--shadow-card);
+  transform: translateY(-6px);
+}
+
+.room-card__image-wrap {
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+}
+
+.room-card__image-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.room-card:hover .room-card__image-wrap img {
+  transform: scale(1.08);
+}
+
+.room-card__body {
+  padding: 22px 24px 26px;
+}
+
+.room-card__body h3 {
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+}
+
+.room-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.room-card__meta span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.room-card__meta svg {
+  color: var(--color-gold);
+}
+
+.room-card__btn {
+  width: 100%;
+}
+
+/* ==========================================================================
+   EXPERIENCE
+   ========================================================================== */
+.experience {
+  padding: var(--section-padding) 0;
+}
+
+.experience__grid {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 20px;
+}
+
+.experience__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+  padding: 10px;
+}
+
+.experience__icon {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-teak);
+  background: var(--color-sand);
+  border: 1px solid var(--color-border);
+  transition: all 0.35s ease;
+}
+
+.experience__item:hover .experience__icon {
+  background: var(--color-dark-green);
+  color: var(--color-gold-soft);
+  transform: translateY(-4px);
+}
+
+.experience__item p {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-dark-green);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   WHY CHOOSE MARARI — FAQ + CONTACT
+   ========================================================================== */
+.why {
+  padding: var(--section-padding) 0;
+  background: var(--color-sand);
+}
+
+.why__grid {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 60px;
+  align-items: start;
+}
+
+/* Accordion */
+.faq__item {
+  border-bottom: 1px solid var(--color-border);
+}
+
+.faq__item:first-child {
+  border-top: 1px solid var(--color-border);
+}
+
+.faq__question {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 4px;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--color-dark-green);
+  transition: color 0.3s ease;
+}
+
+.faq__item--open .faq__question {
+  color: var(--color-teak);
+}
+
+.faq__question svg {
+  flex-shrink: 0;
+  color: var(--color-gold);
+}
+
+.faq__answer-wrap {
+  overflow: hidden;
+}
+
+.faq__answer {
+  padding: 0 4px 22px;
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  line-height: 1.7;
+  max-width: 92%;
+}
+
+/* Contact card */
+.contact-card {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-card);
+}
+
+.contact-card__image {
+  height: 150px;
+  background-size: cover;
+  background-position: center;
+}
+
+.contact-card__body {
+  padding: 30px 32px 34px;
+}
+
+.contact-card__body h3 {
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+.contact-card__body>p {
+  color: var(--color-text-muted);
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+}
+
+.contact-card__list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.contact-card__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.contact-card__icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--color-dark-green);
+  color: var(--color-gold-soft);
+}
+
+.contact-card__list small {
+  display: block;
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.contact-card__list p {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-dark-green);
+}
+
+.contact-card__btn {
+  width: 100%;
+}
+
+/* ==========================================================================
+   TESTIMONIALS
+   ========================================================================== */
+.testimonials {
+  position: relative;
+  padding: var(--section-padding) 0;
+  overflow: hidden;
+  color: var(--color-cream);
+}
+
+.testimonials__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.testimonials__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, rgba(10, 20, 16, 0.94) 30%, rgba(10, 20, 16, 0.35) 100%);
+}
+
+.testimonials__inner {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+.testimonials__desc {
+  color: rgba(251, 247, 239, 0.7);
+  margin-bottom: 26px;
+  font-size: 0.92rem;
+}
+
+.testimonials__rating {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  font-size: 0.85rem;
+  color: rgba(251, 247, 239, 0.85);
+}
+
+.testimonials__google {
+  font-weight: 700;
+  color: var(--color-cream);
+}
+
+.testimonials__stars {
+  display: flex;
+  gap: 2px;
+}
+
+.testimonials__nav {
+  display: flex;
+  gap: 12px;
+}
+
+.testimonials__nav button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid rgba(251, 247, 239, 0.3);
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.testimonials__nav button:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-dark-green);
+}
+
+.review-card {
+  background: var(--color-cream);
+  border-radius: var(--radius-lg);
+  padding: 40px 38px;
+  color: var(--color-charcoal);
+  box-shadow: var(--shadow-strong);
+  max-width: 460px;
+}
+
+.review-card__quote {
+  color: var(--color-gold);
+  margin-bottom: 16px;
+}
+
+.review-card p {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  line-height: 1.55;
+  color: var(--color-dark-green);
+  margin-bottom: 24px;
+}
+
+.review-card__author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.review-card__avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--color-teak);
+  color: var(--color-cream);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+}
+
+.review-card__author strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--color-dark-green);
+}
+
+.review-card__author small {
+  font-size: 0.78rem;
+  color: var(--color-text-muted);
+}
+
+.review-card__dots {
+  display: flex;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.review-card__dots span {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(251, 247, 239, 0.35);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.review-card__dots span.active {
+  background: var(--color-gold);
+  width: 20px;
+  border-radius: 4px;
+}
+
+/* ==========================================================================
+   GALLERY
+   ========================================================================== */
+.gallery {
+  padding: var(--section-padding) 0;
+}
+
+.gallery__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.gallery__grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+
+.gallery__item {
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+}
+
+.gallery__item:first-child {
+  aspect-ratio: 3 / 4;
+}
+
+.gallery__item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.gallery__item:hover img {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   CTA
+   ========================================================================== */
+.cta {
+  position: relative;
+  padding: 140px 0;
+  overflow: hidden;
+}
+
+.cta__bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 65%;
+}
+
+.cta__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(20, 14, 8, 0.75) 20%, rgba(20, 14, 8, 0.2) 80%);
+}
+
+.cta__inner {
+  position: relative;
+  z-index: 2;
+  max-width: 560px;
+}
+
+.cta__inner h2 {
+  font-size: clamp(2.1rem, 4vw, 3rem);
+  color: var(--color-white);
+  margin-bottom: 18px;
+}
+
+.cta__inner p {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1rem;
+  margin-bottom: 34px;
+  max-width: 440px;
+}
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}
+
+.cta__actions .btn--outline {
+  color: var(--color-white);
+}
+
+/* ==========================================================================
+   RESPONSIVE
+   ========================================================================== */
+@media (max-width: 1100px) {
+  .about__features {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .experience__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .why__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  .about__grid {
+    grid-template-columns: 1fr;
+    gap: 50px;
+  }
+
+  .about__image {
+    order: -1;
+  }
+
+  .rooms__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .testimonials__inner {
+    grid-template-columns: 1fr;
+  }
+
+  /* Booking card wraps to two rows at this width — give it room to breathe
+     and let .about grow to match its extra height. */
+  .booking-card {
+    flex-wrap: wrap;
+    max-width: 90%;
+    row-gap: 22px;    
+  }
+
+  .booking-card__divider {
+    display: none;
+  }
+
+  .booking-card__field {
+    min-width: 45%;
+  }
+
+  .booking-card__btn {
+    width: 100%;
+  }
+
+  .about {
+    padding-top: calc(var(--section-padding) + 190px);
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding-bottom: 60px;
+    text-align: left;
+  }
+
+  /* Card stacks into a single column and grows taller; translateY(50%)
+     keeps it centered on the boundary automatically, so .about just needs
+     enough top padding to clear the extra height. */
+  .booking-card {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 25px;
+    gap: 16px;
+    max-width: calc(100% - 40px);
+  }
+
+  .booking-card__field {
+    width: 100%;
+  }
+
+  .booking-card__field--guests {
+    width: 100%;
+  }
+
+  .guests-dropdown {
+    left: 0;
+    right: 0;
+    min-width: 0;
+  }
+
+  .about {
+    padding-top: calc(var(--section-padding) + 300px);
+  }
+
+  .rooms__header,
+  .gallery__header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .rooms__view-all {
+    margin-bottom: 32px;
+  }
+
+  .experience__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .gallery__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .about__features {
+    grid-template-columns: 1fr 1fr;
+    gap: 26px 16px;
+  }
+
+  .rooms__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cta {
+    padding: 90px 0;
+  }
+
+  .cta__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cta__actions .btn {
+    width: 100%;
+  }
+
+  .about {
+    padding-top: calc(var(--section-padding) + 340px);
+  }
+}

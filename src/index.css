@@ -1,0 +1,119 @@
+/* ==========================================================================
+   GLOBAL DESIGN TOKENS — Marari Beach Homestay
+   Palette: Luxury Coastal Resort (Sand / Cream / Dark Green / Teak / Charcoal)
+   ========================================================================== */
+:root {
+  /* Colors */
+  --color-cream: #FBF7EF;
+  --color-sand: #F3ECDD;
+  --color-dark-green: #12261F;
+  --color-dark-green-soft: #1B3229;
+  --color-teak: #8A5A34;
+  --color-gold: #C4A260;
+  --color-gold-soft: #D9C08F;
+  --color-charcoal: #262521;
+  --color-white: #FFFFFF;
+  --color-text-muted: #6B655B;
+  --color-border: rgba(38, 37, 33, 0.1);
+
+  /* Typography */
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Manrope', sans-serif;
+
+  /* Shadows */
+  --shadow-soft: 0 10px 40px rgba(38, 32, 20, 0.08);
+  --shadow-card: 0 20px 50px rgba(24, 28, 22, 0.12);
+  --shadow-strong: 0 30px 70px rgba(15, 20, 15, 0.25);
+
+  /* Radii */
+  --radius-sm: 10px;
+  --radius-md: 18px;
+  --radius-lg: 28px;
+  --radius-pill: 999px;
+
+  /* Layout */
+  --container-width: 1240px;
+  --section-padding: 120px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-cream);
+  color: var(--color-charcoal);
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  color: var(--color-dark-green);
+  line-height: 1.15;
+}
+
+.container {
+  width: 100%;
+  max-width: var(--container-width);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+.italic-accent {
+  font-style: italic;
+  color: var(--color-gold);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 72px;
+  }
+  .container {
+    padding: 0 20px;
+  }
+}
