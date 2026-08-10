@@ -72,7 +72,7 @@ function Footer() {
           <div className="footer__map-frame">
             <iframe
               title="Marari Beach Homestay Location"
-              src="https://maps.google.com/maps?q=Marari%20Beach%2C%20Alappuzha%2C%20Kerala&t=&z=12&ie=UTF8&iwloc=&output=embed"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3934.3294422277313!2d76.3013101745041!3d9.566843380339241!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3b0887963a3ee9dd%3A0xe9d709b5f883f2cc!2sMarari%20Traditional%20Beach%20Homestay!5e0!3m2!1sen!2sin!4v1786374564953!5m2!1sen!2sin"
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
             />
