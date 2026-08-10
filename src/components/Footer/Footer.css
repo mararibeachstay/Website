@@ -141,6 +141,34 @@
 }
 
 
+.footer-heart {
+  display: inline-block;
+  color: #ff4d6d;
+  margin: 0 2px;
+  animation: heartbeat 2s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  25% {
+    transform: scale(1.15);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  75% {
+    transform: scale(1.15);
+  }
+}
+
+/* 
 .footer__crafted {
   display: flex;
   align-items: center;
@@ -156,8 +184,8 @@
 
 .footer__crafted a:hover {
   color: var(--color-gold-soft);
-}
-
+} */
+/* 
 .footer__heart {
   display: inline-flex;
   align-items: center;
@@ -201,7 +229,7 @@
     transform: scale(1);
   }
 
-}
+} */
 
 @media (max-width: 992px) {
   .footer__top {

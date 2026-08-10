@@ -38,10 +38,10 @@ function Footer() {
         <div className="footer__col">
           <h4>Quick Links</h4>
           <ul>
-            <li><a  onClick={() => scrollToSection('home')}>Home</a></li>
-            <li><a  onClick={() => scrollToSection('about')}>About Us</a></li>
-            <li><a  onClick={() => scrollToSection('rooms')}>Rooms</a></li>
-            <li><a  onClick={() => scrollToSection('experience')}>Experience</a></li>
+            <li><a onClick={() => scrollToSection('home')}>Home</a></li>
+            <li><a onClick={() => scrollToSection('about')}>About Us</a></li>
+            <li><a onClick={() => scrollToSection('rooms')}>Rooms</a></li>
+            <li><a onClick={() => scrollToSection('experience')}>Experience</a></li>
           </ul>
         </div>
 
@@ -88,18 +88,8 @@ function Footer() {
             All Rights Reserved.
           </p>
 
-          <p className="footer__crafted">
-            Crafted with
-            <Heart className="footer__heart-icon" size={15} fill="currentColor" />
-            by{" "}
-            <a
-              href="https://adithyanskumar.netlify.app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Adithyan
-            </a>
-          </p>
+          <p>Crafted with <span className="footer-heart">&hearts;</span> by <a href="https://adithyanskumar.netlify.app" target="_blank" rel="noopener noreferrer">Adithyan</a></p>
+
 
         </div>
       </div>
