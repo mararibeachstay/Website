@@ -342,14 +342,14 @@ function Home() {
           />        <div className="hero__overlay" />
 
           <div className="container hero__content">
-            <motion.p
+            {/* <motion.p
               className="hero__eyebrow"
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               🌴 Welcome to Mararikulam
-            </motion.p>
+            </motion.p> */}
 
             <motion.h1
               className="hero__heading"
@@ -531,7 +531,7 @@ function Home() {
             <motion.div variants={fadeUp}>
               <SectionTitle
                 icon="🌴"
-                eyebrow="Welcome to Marari"
+                eyebrow="Welcome to Marari Traditional Beach Homestay"
                 heading="Where Every Stay"
                 accent="Feels Like Home"
               />
