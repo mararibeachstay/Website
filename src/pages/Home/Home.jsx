@@ -771,7 +771,7 @@ function Home() {
             </Button>
             <Button
               as="a"
-              href={buildWhatsAppLink('Hi! I would like to know more about Marari Beach Homestay and check room availability.')}
+              href={buildWhatsAppLink('Hi! I would like to know more about Marari Traditional Beach Homestay and check room availability.')}
               target="_blank"
               rel="noopener noreferrer"
               variant="outline"
