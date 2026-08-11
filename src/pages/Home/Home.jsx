@@ -766,7 +766,7 @@ function Home() {
             <Button variant="primary" icon={CalendarDays} onClick={() => scrollToSection('booking')}>
               Book Your Stay
             </Button>
-            <Button as="a" href="tel:+919496861903" variant="outline" icon={Phone}>
+            <Button as="a" href="tel:+919562760142" variant="outline" icon={Phone}>
               Call Now
             </Button>
             <Button
